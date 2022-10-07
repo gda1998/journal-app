@@ -1,10 +1,13 @@
-import React from 'react';
+import { useSelector } from 'react-redux';
 import { Routes, Route, Navigate } from 'react-router-dom';
 import { LoginScreen } from '../components/auth/LoginScreen';
 import { RegisterScreen } from '../components/auth/RegisterScreen';
 
 export const AuthRouter = () => {
-    return (
+    const authData = useSelector( state => state.auth );
+    return Object.keys(authData).length > 0 
+    ? <Navigate to="/" replace /> 
+    : (
         <div className="auth__main">
             <div className="auth__box-container">
                 <Routes>

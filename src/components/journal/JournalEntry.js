@@ -1,31 +1,43 @@
-import React from 'react';
+import dayjs from 'dayjs';
+import { useDispatch } from 'react-redux';
+import { activeNoteAction } from '../../actions/notes';
 
-export const JournalEntry = () => {
+
+export const JournalEntry = ({ id, title, body, date, url }) => {
+    const noteDate = dayjs(date);
+    const dispatch = useDispatch();
+    const handleEntryClick = () => dispatch( activeNoteAction(id, { title, body, date, url }) );
+
     return (
-        <div className="journal__entry pointer">
+        <div 
+            className="journal__entry pointer animate__animated animate__fadeIn animate__faster"
+            onClick={ handleEntryClick }
+        >
 
-            <div 
-                className="journal__entry-picture"
-                style={{ 
-                    backgroundSize: 'cover',
-                    backgroundImage: 'url(https://images.ctfassets.net/hrltx12pl8hq/3MbF54EhWUhsXunc5Keueb/60774fbbff86e6bf6776f1e17a8016b4/04-nature_721703848.jpg?fit=fill&w=480&h=270)'
-                }}
-            >
+            { url && 
+                <div 
+                    className="journal__entry-picture"
+                    style={{ 
+                        backgroundSize: 'cover',
+                        backgroundImage: `url(${ url })`
+                    }}
+                >
+                </div>/* /.journal__entry-picture */
+            }
 
-            </div>{/* /.journal__entry-picture */}
 
             <div className="journal__entry-body">
                 <p className="journal__entry-title">
-                    Un nuevo día
+                    { title }
                 </p>
                 <p className="journal__entry-content">
-                    Lorem ipsum dolor sit amet consectetur, adipisicing elit.
+                    { body }
                 </p>
             </div>{/* /.journal__entry-body */}
 
             <div className="journal__entry-date-box">
-                <span>Monday</span>
-                <h4>28</h4>
+                <span>{ noteDate.format('dddd') }</span>
+                <h4>{ noteDate.format('DD') }</h4>
             </div>{/* /.journal__entry-date-box */}
 
         </div>/* /.journal__entry */

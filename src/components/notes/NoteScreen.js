@@ -1,7 +1,37 @@
-import React from 'react';
+import { useEffect, useRef } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { useForm } from '../../hooks/useForm';
 import { NotesAppBar } from './NotesAppBar';
+import { activeNoteAction, startDeleteNote } from '../../actions/notes';
 
 export const NoteScreen = () => {
+    // Redux
+    const dispatch = useDispatch();
+    const { active:note } = useSelector( state => state.notes );
+
+    // useForm
+    const [ formValues, handleInputChange, reset ] = useForm(note);
+    const { title, body } = formValues;
+    note.url && ( formValues.url = note.url );
+
+    // useRef
+    const activeId = useRef(note.id);
+
+    // handleDelete
+    const handleDelete = () => dispatch( startDeleteNote(note.id) );
+
+    useEffect(() => {
+        if( activeId.current !== note.id ){
+            reset(note);
+            activeId.current = note.id;
+        }
+    }, [note, reset]);
+
+    useEffect(() => {
+        dispatch( activeNoteAction(formValues.id, {...formValues}) );
+    }, [dispatch, formValues]);
+    
+
     return (
         <div className="notes__main-content">
 
@@ -9,24 +39,41 @@ export const NoteScreen = () => {
             <div className="notes__content">
 
                 <input
-                    type="text"
-                    placeholder="Some awesome title"
-                    className="notes__title-input"
                     autoComplete="off"
+                    className="notes__title-input"
+                    name="title"
+                    onChange={ handleInputChange }
+                    placeholder="Some awesome title"
+                    type="text"
+                    value={ title }
                 />
                 <textarea
-                    placeholder="What's happened today?"
                     className="notes__textarea"
+                    name="body"
+                    onChange={ handleInputChange }
+                    placeholder="What's happened today?"
+                    type="text"
+                    value={ body }
                 ></textarea>
 
-                <div className="notes__image">
-                    <img
-                        src="https://media.istockphoto.com/photos/picturesque-morning-in-plitvice-national-park-colorful-spring-scene-picture-id1093110112?k=20&m=1093110112&s=612x612&w=0&h=3OhKOpvzOSJgwThQmGhshfOnZTvMExZX2R91jNNStBY="
-                        alt="imagen"
-                    />
-                </div>{/* /.notes__image */}
+                {
+                    note.url &&
+                    <div className="notes__image">
+                        <img
+                            src={ note.url }
+                            alt="imagen"
+                        />
+                    </div>/* /.notes__image */
+                }
 
             </div>{/* /.notes__content */}
+
+            <button
+                className="btn btn-danger"
+                onClick={ handleDelete }
+            >
+                Delete
+            </button>
 
         </div>/* /.notes__main-content */
     );

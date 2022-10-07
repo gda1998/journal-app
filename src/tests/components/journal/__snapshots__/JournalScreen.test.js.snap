@@ -1,0 +1,161 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Pruebas en <JournalScreen /> Se debe de mostrar correctamente 1`] = `
+<div
+  className="journal__main-content animate__animated animate__fadeIn animate__faster"
+>
+  <aside
+    className="journal__sidebar"
+  >
+    <div
+      className="journal__sidebar-navbar"
+    >
+      <h3
+        className="mt-5"
+      >
+        <i
+          className="far fa-moon"
+        />
+        <span>
+          Gabriel
+        </span>
+      </h3>
+      <button
+        className="btn"
+        onClick={[Function]}
+      >
+        Logout
+      </button>
+    </div>
+    <div
+      className="journal__new-entry"
+      onClick={[Function]}
+    >
+      <i
+        className="far fa-calendar-plus fa-5x"
+      />
+      <p
+        className="mt-5"
+      >
+        New Entry
+      </p>
+    </div>
+    <div
+      className="journal__entries"
+    >
+      <div
+        className="journal__entry pointer animate__animated animate__fadeIn animate__faster"
+        onClick={[Function]}
+      >
+        <div
+          className="journal__entry-body"
+        >
+          <p
+            className="journal__entry-title"
+          />
+          <p
+            className="journal__entry-content"
+          />
+        </div>
+        <div
+          className="journal__entry-date-box"
+        >
+          <span>
+            Saturday
+          </span>
+          <h4>
+            12
+          </h4>
+        </div>
+      </div>
+      <div
+        className="journal__entry pointer animate__animated animate__fadeIn animate__faster"
+        onClick={[Function]}
+      >
+        <div
+          className="journal__entry-body"
+        >
+          <p
+            className="journal__entry-title"
+          />
+          <p
+            className="journal__entry-content"
+          />
+        </div>
+        <div
+          className="journal__entry-date-box"
+        >
+          <span>
+            Saturday
+          </span>
+          <h4>
+            12
+          </h4>
+        </div>
+      </div>
+    </div>
+  </aside>
+  <main>
+    <div
+      className="notes__main-content"
+    >
+      <div
+        className="notes__appbar"
+      >
+        <span>
+          05 de Noviembre de 2021
+        </span>
+        <input
+          id="fileSelector"
+          onChange={[Function]}
+          style={
+            Object {
+              "display": "none",
+            }
+          }
+          type="file"
+        />
+        <div>
+          <button
+            className="btn"
+            onClick={[Function]}
+          >
+            Picture
+          </button>
+          <button
+            className="btn"
+            onClick={[Function]}
+          >
+            Save
+          </button>
+        </div>
+      </div>
+      <div
+        className="notes__content"
+      >
+        <input
+          autoComplete="off"
+          className="notes__title-input"
+          name="title"
+          onChange={[Function]}
+          placeholder="Some awesome title"
+          type="text"
+        />
+        <textarea
+          className="notes__textarea"
+          name="body"
+          onChange={[Function]}
+          placeholder="What's happened today?"
+          type="text"
+        />
+      </div>
+      <button
+        className="btn btn-danger"
+        onClick={[Function]}
+      >
+        Delete
+      </button>
+    </div>
+  </main>
+</div>
+`;

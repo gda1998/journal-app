@@ -1,15 +1,20 @@
-import React from 'react';
+import { useSelector } from 'react-redux';
+import { Navigate } from 'react-router-dom';
 import { NoteScreen } from '../notes/NoteScreen';
 import { Sidebar } from './Sidebar';
-// import { NothingSelected } from './NothingSelected';
+import { NothingSelected } from './NothingSelected';
 
 export const JournalScreen = () => {
-    return (
-        <div className="journal__main-content">
+    const { auth, notes } = useSelector( state => state );
+    return Object.keys(auth).length === 0 
+    ? <Navigate to="/auth/login" />
+    : (
+        <div className="journal__main-content animate__animated animate__fadeIn animate__faster">
             <Sidebar />
             <main>
-                {/* <NothingSelected /> */}
-                <NoteScreen />
+                {
+                    notes.active === null ? <NothingSelected /> : <NoteScreen />
+                }
             </main>
         </div>
     );
