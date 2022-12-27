@@ -1,7 +1,12 @@
+import dayjs from 'dayjs';
+import localizedFormat from 'dayjs/plugin/localizedFormat';
 import { useDispatch, useSelector } from 'react-redux';
 import { startUpdateNote, startUploadingImgAction } from '../../actions/notes';
 
 export const NotesAppBar = () => {
+    // Date now
+    dayjs.extend(localizedFormat);
+
     // Redux
     const dispatch = useDispatch();
     const { active:note } = useSelector( state => state.notes );
@@ -15,7 +20,7 @@ export const NotesAppBar = () => {
 
     return (
         <div className="notes__appbar">
-            <span>05 de Noviembre de 2021</span>
+            <span>{ dayjs().format('LL') }</span>
 
             <input
                 id="fileSelector"
