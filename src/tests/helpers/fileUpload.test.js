@@ -1,11 +1,12 @@
 import 'setimmediate';
 import cloudinary from 'cloudinary';
 import fileUpload from '../../helpers/fileUpload';
+import fileDelete from '../../helpers/fileDelete';
 
 cloudinary.config({
-    cloud_name: process.env.CLOUDINARY_NAME,
-    api_key: process.env.CLOUDINARY_API_KEY,
-    api_secret: process.env.CLOUDINARY_API_SECRET
+    cloud_name: process.env.REACT_APP_CLOUDINARY_NAME,
+    api_key: process.env.REACT_APP_CLOUDINARY_API_KEY,
+    api_secret: process.env.REACT_APP_CLOUDINARY_API_SECRET,
 });
 
 describe('Pruebas en el helper fileUpload', () => {
@@ -23,11 +24,7 @@ describe('Pruebas en el helper fileUpload', () => {
         // Obtenemos la url donde se guardo la imagen
         const url = await fileUpload(file);
         expect(typeof url).toBe('string');
-
-        // Borrar imagen por Id
-        const segments = url.split('/');
-        const imageName = segments[segments.length - 1].replace('.jpg', '');
-        await cloudinary.v2.api.delete_resources(`assets/${imageName}`, {}, () => { });
+        fileDelete(url);
     });
 
     test('Debe de retornar un error', async () => {

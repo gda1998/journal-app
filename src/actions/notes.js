@@ -6,13 +6,13 @@ import {
     doc,
     updateDoc,
     deleteDoc,
-    // getDoc
+    getDoc
 } from 'firebase/firestore';
 import Swal from 'sweetalert2';
 import { swalAlert, swalLoading } from '../helpers/swalToast';
 import loadNotes from '../helpers/loadNotes';
 import fileUpload from '../helpers/fileUpload';
-// import fileDelete from '../helpers/fileDelete';
+import fileDelete from '../helpers/fileDelete';
 
 export const startNewNoteAction = () => {
     return (dispatch, getState) => {
@@ -89,12 +89,13 @@ export const startDeleteNote = (id) => {
         const { uid } = getState().auth;
         try {
             const ref = await doc(db, uid, `journal/notes/${id}`);
-            // const noteRef = await getDoc(ref);
+            const noteRef = await getDoc(ref);
 
             // Delete the image from cloudinary and from the db
-            // fileDelete(noteRef.data().url)
+            if( noteRef.data().url !== null && noteRef.data().url !== undefined )
+                fileDelete(noteRef.data().url)
+            
             await deleteDoc(ref);
-
             dispatch(deleteNote(id));
         } catch (error) {
             console.error('Error al eliminar la nota: ', error);
