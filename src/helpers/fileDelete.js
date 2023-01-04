@@ -6,9 +6,10 @@ cloudinary.config({
     api_key: process.env.REACT_APP_CLOUDINARY_API_KEY,
     api_secret: process.env.REACT_APP_CLOUDINARY_API_SECRET,
 });
+
 /**
  * @param  {String} url
- * @returns  {Promise<void>}
+ * @returns  {Promise<String>}
  */
 const fileDelete = async(url) => {
     const segments = url.split('/');
@@ -16,9 +17,8 @@ const fileDelete = async(url) => {
     // Get the filename extension and delete it, just keep the filename
     const imageName = fileName.replace(/[^.]+$/.exec(fileName), '').split('.')[0];
 
-    await cloudinary.uploader.destroy(imageName, ({result}) => {
-        result !== 'ok' && swalAlert('Error!', 'Error trying delete the image ' + result, 'error');
-    });
+    const { result } = await cloudinary.uploader.destroy(imageName);
+    return result === 'ok' ? '' : `Error trying delete the image: ${result}`;
 }
 
 export default fileDelete;

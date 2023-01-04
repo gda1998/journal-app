@@ -2,6 +2,7 @@ import 'setimmediate';
 import cloudinary from 'cloudinary';
 import fileUpload from '../../helpers/fileUpload';
 import fileDelete from '../../helpers/fileDelete';
+import createFile from '../../helpers/createFile';
 
 cloudinary.config({
     cloud_name: process.env.REACT_APP_CLOUDINARY_NAME,
@@ -12,14 +13,8 @@ cloudinary.config({
 describe('Pruebas en el helper fileUpload', () => {
 
     test('Debe de cargar un archivo y retornar la URL', async () => {
-        // Obtenemos la url de la img
-        const resp = await fetch('https://pbs.twimg.com/profile_images/1321662922762825728/geIj9G3O_400x400.jpg');
-
-        // Convertimos a blob la img
-        const blob = await resp.blob();
-
         // Creamos un nuevo archivo con ese blob
-        const file = new File([blob], 'foto.jpg');
+        const file = await createFile();
 
         // Obtenemos la url donde se guardo la imagen
         const url = await fileUpload(file);
