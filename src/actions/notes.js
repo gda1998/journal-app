@@ -76,6 +76,15 @@ export const startUploadingImgAction = (file) => {
         const { active: activeNote } = getState().notes;
         swalLoading('Uploading', 'Please wait...');
 
+        // If exists the image first will be deleted and then upload the new image
+        if(activeNote.url){
+            const result = await fileDelete(activeNote.url);
+            if(result !== ''){
+                swalAlert('Error!', result, 'error');
+                return;
+            }
+        }
+
         const fileUrl = await fileUpload(file);
         activeNote.url = fileUrl;
 
@@ -92,8 +101,13 @@ export const startDeleteNote = (id) => {
             const noteRef = await getDoc(ref);
 
             // Delete the image from cloudinary and from the db
-            if( noteRef.data().url !== null && noteRef.data().url !== undefined )
-                fileDelete(noteRef.data().url)
+            if( noteRef.data().url !== null && noteRef.data().url !== undefined ){
+                const result = await fileDelete(noteRef.data().url);
+                if(result !== ''){
+                    swalAlert('Error!', result, 'error');
+                    return;
+                }
+            }
             
             await deleteDoc(ref);
             dispatch(deleteNote(id));
