@@ -1,3 +1,7 @@
+/**
+ * @param  {File} file
+ * @returns  {String|null}
+ */
 const fileUpload = async(file) => {
     const cloudUrl = 'https://api.cloudinary.com/v1_1/gda1998/upload';
 
