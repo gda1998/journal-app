@@ -1,5 +1,4 @@
 import cloudinary from 'cloudinary/lib/cloudinary';
-import { swalAlert } from './swalToast';
 
 cloudinary.config({
     cloud_name: process.env.REACT_APP_CLOUDINARY_NAME,
